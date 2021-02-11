@@ -1,5 +1,6 @@
 #Pour cette premire partie de projet le but été de se familiariser avec le module pygame et de comprendre son fonctionnement. 
-#Nous avons donc pour l'instant seuleument réussi a crée la boucle qui fait tourner le jeux, crée la fenêtre de jeux et nous commencons a implementé les premiers sprite (caractère de jeu).
+#Nous avons pour l'instant  réussi a crée la boucle qui fait tourner le jeux, crée la fenêtre de jeux, implementé les premiers sprite (caractère de jeu) et les faire se déplacé dans l'espace sans qu'il sorte de l'écran. La prochainne étape serait de mettre un décor et de coder les collisions entre les joueurs et le décor.
+import os
 
 import pygame
 import random
@@ -23,8 +24,6 @@ playerY = 900
 playerX_change = 0  
 playerY_change = 0
 
-def player(x,y):
-    screen.blit(playerImg,(x,y))
 #Enemy
 EnemyImg =pygame.image.load('apple.png')
 EnemyImg = pygame.transform.scale(EnemyImg, (64, 64))
@@ -34,10 +33,16 @@ EnemyY = random.randint(50,500)
 EnemyX_change = 0  
 EnemyY_change = 0
 
+def player(x,y):
+    screen.blit(playerImg,(x,y))
+    
 def Enemy(x,y):
     screen.blit(EnemyImg,(x,y))
 
-
+def collisions(sprite1,sprite2):
+    col = pygame.sprite.collide_rect(sprite1, sprite2)
+    if col == True:
+        sys.exit()
 
 # Tourne le joue en boucle
 running = True
@@ -79,15 +84,15 @@ while running:
     #Permet de délimiter la fenetre, empeche le joueur d'aller en dehors de la fenetre
     if playerX <= 0:
         playerX =0
-    elif playerX >= 984:
-        playerX = 984
+    elif playerX >= 936:
+        playerX = 936
         
     if playerY <= 0:
         playerY = 0
-    elif playerY >= 984:
-        playerY = 984
+    elif playerY >= 936:
+        playerY = 936
     
-        
+
     player(playerX,playerY)
     Enemy(EnemyX,EnemyY)
     pygame.display.update()
